@@ -505,6 +505,7 @@ footer {
     color: white;
     position: relative;
     z-index: 1;
+    padding: 2rem 0;
 }
 
 .hero-text {
@@ -543,6 +544,7 @@ footer {
     box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
     opacity: 0;
     animation: fadeInRight 0.8s ease-out 0.4s forwards;
+    margin: 0 auto;
 }
 
 .avatar-container img {
@@ -659,21 +661,62 @@ footer {
     .hero-content {
         flex-direction: column-reverse;
         text-align: center;
-        padding: 2rem 0;
+        padding: 6rem 1rem 2rem;
+        gap: 2rem;
     }
 
     .hero-text h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
+    }
+
+    .hero-text p {
+        font-size: 1rem;
+        padding: 0 1rem;
     }
 
     .avatar-container {
         width: 200px;
         height: 200px;
         margin: 0 auto;
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
     }
 
-    .contact-grid {
-        grid-template-columns: 1fr;
+    .hero {
+        min-height: auto;
+        padding: 80px 0 2rem;
+    }
+
+    .hero-cta {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .hero-cta .btn {
+        width: 100%;
+        max-width: 250px;
+        text-align: center;
+    }
+}
+
+/* Add a medium breakpoint for better scaling */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .hero-content {
+        gap: 2rem;
+        padding: 2rem 1rem;
+    }
+
+    .avatar-container {
+        width: 250px;
+        height: 250px;
+    }
+
+    .hero-text h1 {
+        font-size: 2.5rem;
     }
 }
 
