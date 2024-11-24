@@ -811,3 +811,25 @@ section#experience {
 section#education {
     padding-top: 2rem;
 }
+
+.category-tabs .tab {
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    margin: 0 0.5rem;
+}
+
+.category-tabs .tab:hover {
+    background-color: #f0f0f0;
+}
+
+.category-tabs .tab.active {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
