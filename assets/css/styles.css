@@ -661,7 +661,7 @@ footer {
     .hero-content {
         flex-direction: column-reverse;
         text-align: center;
-        padding: 6rem 1rem 2rem;
+        padding: 8rem 1rem 2rem;
         gap: 2rem;
     }
 
@@ -679,14 +679,12 @@ footer {
         height: 200px;
         margin: 0 auto;
         position: relative;
-        top: auto;
-        left: auto;
-        transform: none;
+        margin-top: 4rem;
     }
 
     .hero {
-        min-height: auto;
-        padding: 80px 0 2rem;
+        min-height: 100vh;
+        padding-top: 60px;
     }
 
     .hero-cta {
@@ -700,6 +698,11 @@ footer {
         width: 100%;
         max-width: 250px;
         text-align: center;
+    }
+
+    .hero-image {
+        margin-top: auto;
+        padding-top: 4rem;
     }
 }
 
