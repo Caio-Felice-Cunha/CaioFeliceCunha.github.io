@@ -82,10 +82,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Add error handling for failed script loading
+    // Log unexpected runtime errors for debugging. We deliberately do NOT wipe
+    // the project grids here: a single unrelated error should not blank the
+    // whole portfolio. Fetch failures are handled where they occur, in
+    // fetchGitHubProjects, which is the only place displayError belongs.
     window.onerror = function(msg, url, lineNo, columnNo, error) {
         console.error('Error: ', msg, url, lineNo, columnNo, error);
-        displayError('An error occurred while loading the page. Please refresh and try again.');
         return false;
     };
 
@@ -256,7 +258,13 @@ function filterProjects() {
         if (!category) return false;
 
         if (category.main === activeCategory) {
-            return !activeSubcategory || category.sub === activeSubcategory;
+            // Show the project when no subtab is active, when its language
+            // subcategory matches the active subtab, or when it has no language
+            // subtopic at all (otherwise such repos would be permanently hidden
+            // from All Projects, since a subtab is always active).
+            return !activeSubcategory ||
+                   category.sub === activeSubcategory ||
+                   category.sub === undefined;
         }
         return false;
     });
@@ -282,9 +290,11 @@ function displayProjects(projects, searchTerm = '') {
         let name = project.name;
         let description = project.description || 'No description available';
 
-        // Highlight search terms if provided
+        // Highlight search terms if provided.
+        // Escape regex metacharacters first so terms like 'c++' or '(' do not
+        // throw 'Invalid regular expression' and blank the projects section.
         if (searchTerm) {
-            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            const regex = new RegExp(`(${escapeRegExp(searchTerm)})`, 'gi');
             name = name.replace(regex, '<span class="highlight">$1</span>');
             description = description.replace(regex, '<span class="highlight">$1</span>');
         }
@@ -365,6 +375,12 @@ function searchProjects(searchTerm) {
 
     // Highlight search terms in the results
     displayProjects(filteredProjects, normalizedSearchTerm);
+}
+
+// Escape characters that have special meaning inside a regular expression so
+// that arbitrary user search input can be used safely in new RegExp().
+function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function debounce(func, wait) {
