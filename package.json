@@ -1,0 +1,12 @@
+{
+  "name": "caiofelicecunha-portfolio",
+  "version": "1.0.0",
+  "description": "Personal portfolio website (static HTML/CSS/JS) for Caio Di Felice Cunha.",
+  "private": true,
+  "scripts": {
+    "test": "node --test \"test/**/*.test.js\"",
+    "serve": "python -m http.server 8000"
+  },
+  "license": "MIT",
+  "homepage": "https://caio-felice-cunha.github.io/CaioFeliceCunha.github.io/"
+}
