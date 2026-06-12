@@ -390,7 +390,7 @@
         if (typeof window.Lenis === 'undefined') return null;
         try {
             var l = new window.Lenis({
-                duration: 0.6,
+                duration: 0.2,
                 smoothWheel: true,
                 wheelMultiplier: 1.2,
                 easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); }
