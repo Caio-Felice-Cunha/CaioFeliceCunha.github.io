@@ -275,7 +275,6 @@
         // Still wire up the cheap enhancements that need no GSAP.
         initCursor();
         initMagnetic();
-        initLenisIfPresent(null);
         return;
     }
 
@@ -286,9 +285,12 @@
     }
 
     /* --------------------------------------------------------
-       SMOOTH SCROLL (Lenis) - optional. Bridges to ScrollTrigger.
+       SCROLL: native (no Lenis). Mouse wheel and trackpad stay 1:1
+       with the OS, which is snappier and more accessible than
+       interpolating wheel input. ScrollTrigger works on native
+       scroll by default; anchor jumps are smoothed via CSS
+       scroll-behavior (gated behind prefers-reduced-motion).
        -------------------------------------------------------- */
-    var lenis = initLenisIfPresent(gsap);
 
     /* --------------------------------------------------------
        KINETIC HERO TYPE + orchestrated entrance timeline
@@ -382,33 +384,39 @@
     initMagnetic();
     initCardGlow();
 
+    /* --------------------------------------------------------
+       REVEAL SAFETY NET. The GSAP ScrollTrigger reveals are the
+       smooth path. This guarantees no [data-reveal] can ever stay
+       stuck partially hidden, independent of GSAP's rAF (covers a
+       throttled/backgrounded tab, or a once-trigger missed on a
+       very fast jump). It runs only after scrolling settles, so it
+       never fights an in-flight animation: by then any in-view
+       reveal has finished and this is a no-op; only a genuinely
+       stuck element gets forced to its final state.
+       -------------------------------------------------------- */
+    (function revealSafetyNet() {
+        function settle() {
+            var vh = window.innerHeight;
+            document.querySelectorAll('[data-reveal]').forEach(function (el) {
+                var r = el.getBoundingClientRect();
+                if (r.top < vh * 0.92 && r.bottom > 0 &&
+                    parseFloat(window.getComputedStyle(el).opacity) < 0.99) {
+                    el.style.opacity = '1';
+                    el.style.transform = 'none';
+                }
+            });
+        }
+        var t;
+        window.addEventListener('scroll', function () {
+            window.clearTimeout(t);
+            t = window.setTimeout(settle, 1000);
+        }, { passive: true });
+        window.setTimeout(settle, 2000);
+    })();
+
     /* ========================================================
        Helper inits (defined as hoisted functions)
        ======================================================== */
-
-    function initLenisIfPresent(gsapRef) {
-        if (typeof window.Lenis === 'undefined') return null;
-        try {
-            var l = new window.Lenis({
-                duration: 0.2,
-                smoothWheel: true,
-                wheelMultiplier: 1.2,
-                easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); }
-            });
-            function raf(time) {
-                l.raf(time);
-                window.requestAnimationFrame(raf);
-            }
-            window.requestAnimationFrame(raf);
-
-            if (gsapRef && typeof window.ScrollTrigger !== 'undefined') {
-                l.on('scroll', window.ScrollTrigger.update);
-            }
-            return l;
-        } catch (e) {
-            return null;
-        }
-    }
 
     function initCursor() {
         if (isTouch) return;
