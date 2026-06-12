@@ -312,13 +312,13 @@ function displayProjects(projects, searchTerm = '') {
 
         const card = document.createElement('div');
         card.className = 'project-card';
-        
+
         card.innerHTML = `
             <h3>${name}</h3>
             <p>${description}</p>
             ${topicTags}
             <div class="project-links">
-                <a href="${project.html_url}" class="btn" target="_blank">View Project</a>
+                <a href="${project.html_url}" class="btn" target="_blank" rel="noopener noreferrer">View on GitHub</a>
             </div>
         `;
 
@@ -421,23 +421,5 @@ function retryFetch() {
     fetchGitHubProjects();
 }
 
-// Add styles for category tags
-const additionalStyles = document.createElement('style');
-additionalStyles.textContent = `
-    .category-tag {
-        display: inline-block;
-        background-color: var(--primary-color);
-        color: white;
-        padding: 0.2rem 0.5rem;
-        border-radius: 15px;
-        font-size: 0.8rem;
-        margin: 0.5rem 0;
-    }
-    .category-tags {
-        display: flex;
-        gap: 0.5rem;
-        flex-wrap: wrap;
-        margin: 0.5rem 0;
-    }
-`;
-document.head.appendChild(additionalStyles); 
+// Category-tag styling is owned by the deep-space theme stylesheet
+// (assets/css/styles.css). No runtime style injection needed here.
