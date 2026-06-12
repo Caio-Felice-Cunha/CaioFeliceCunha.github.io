@@ -10,6 +10,13 @@
     --container-width: 1200px;
     --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     --transition-speed: 0.3s;
+    /* Derived tokens for the positioning refresh (mapped from spec intent). */
+    --bg: var(--background-color);          /* spec --bg */
+    --bg-alt: #f0f0f2;                       /* spec --bg-alt: recessed surface */
+    --text-muted: #718096;                   /* spec --text-muted */
+    --radius: 12px;                          /* spec --radius */
+    --shadow: var(--card-shadow);            /* spec --shadow */
+    --shadow-lift: 0 10px 24px rgba(0, 0, 0, 0.12);
 }
 
 * {
@@ -158,6 +165,39 @@ section {
     background: linear-gradient(135deg, #805ad5, #6b46c1);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    border-color: var(--accent-color);
+}
+
+/* Button tiers (primary / secondary / ghost). The base .btn is the primary
+   gradient; the tiers below override surface and border so the same markup
+   reads correctly on both the dark hero and the light flagship cards. */
+.btn-primary {
+    /* inherits the gradient from .btn; explicit so intent is obvious */
+    background: var(--gradient-secondary);
+    color: #fff;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    box-shadow: none;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--accent-color);
+}
+
+.btn-ghost {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: none;
+}
+
+.btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.12);
     border-color: var(--accent-color);
 }
 
@@ -714,5 +754,372 @@ section#education {
 .category-tabs .tab.active {
     background-color: var(--secondary-color);
     color: white;
+}
+
+/* =========================================================================
+   POSITIONING REFRESH: Applied AI for business
+   Hero chip + title hierarchy, Now, Credibility, Selected Work, Building Now,
+   secondary projects browser. Tokens mapped from spec intent in :root above.
+   ========================================================================= */
+
+/* ---- Hero positioning ---- */
+.hero-chip {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    margin-bottom: 1.2rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent-color);
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.hero-text h1.hero-title {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    margin-bottom: 1.2rem;
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.hero-subtitle {
+    font-size: 1.35rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #f5f5f7;
+    margin-bottom: 1.2rem;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out 0.15s forwards;
+}
+
+.hero-lede {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.82);
+    margin-bottom: 2rem;
+    max-width: 60ch;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out 0.3s forwards;
+}
+
+.hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out 0.45s forwards;
+}
+
+.hero-cta .btn {
+    margin: 0;
+}
+
+/* ---- Now section ---- */
+section#now {
+    padding: 3rem 0 1rem;
+}
+
+.now-block {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 1.75rem 2rem;
+    background: var(--bg-alt);
+    border-left: 4px solid var(--accent-color);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.now-label {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+}
+
+.now-body {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--text-color);
+}
+
+/* ---- Credibility strip ---- */
+section#credibility {
+    padding: 3rem 0;
+    background: var(--bg-alt);
+}
+
+.cred-intro {
+    max-width: 820px;
+    margin: 0 auto 2.5rem;
+    text-align: center;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-color);
+}
+
+.cred-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+}
+
+.cred-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border-top: 3px solid var(--secondary-color);
+}
+
+.cred-side {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+/* Two-tone = the "both sides" signal: business vs data/tech. */
+.cred-side--business {
+    color: var(--secondary-color);
+    background: rgba(107, 70, 193, 0.12);
+    border: 1px solid rgba(107, 70, 193, 0.35);
+}
+
+.cred-side--tech {
+    color: #1a1a1a;
+    background: rgba(212, 175, 55, 0.18);
+    border: 1px solid rgba(212, 175, 55, 0.5);
+}
+
+.cred-label {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    line-height: 1.3;
+}
+
+.cred-sub {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+/* ---- Selected work / flagship grid ---- */
+section#selected-work {
+    padding: 4rem 0;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.25rem;
+    color: var(--primary-color);
+    margin-bottom: 0.75rem;
+}
+
+.section-intro {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 3rem;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+}
+
+.flagship-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+}
+
+.flagship-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-top: 3px solid var(--primary-color);
+    transition: transform var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow var(--transition-speed) ease;
+}
+
+.flagship-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lift);
+}
+
+.flagship-card__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.flagship-card__head h3,
+.flagship-card__head h4 {
+    margin: 0;
+    font-size: 1.15rem;
+    color: var(--primary-color);
+    word-break: break-word;
+}
+
+.flagship-card__lead {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--text-color);
+    margin-bottom: 0.85rem;
+}
+
+.flagship-card__support {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+}
+
+/* Pin the CTA to the bottom so cards line up at even heights. */
+.flagship-card__foot {
+    margin-top: auto;
+}
+
+.flagship-card__foot .btn {
+    margin: 0;
+}
+
+/* ---- Building now (private cards) ---- */
+.building-now {
+    margin-top: 3.5rem;
+}
+
+.building-now__title {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+.building-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.75rem;
+}
+
+/* Private = intentionally not linked: neutral border, recessed surface,
+   no hover lift, no anchor. Reads as "by design", never a dead link. */
+.flagship-card--private {
+    background: var(--bg-alt);
+    border-top: 3px solid var(--text-muted);
+}
+
+.flagship-card--private:hover {
+    transform: none;
+    box-shadow: var(--shadow);
+}
+
+.status-pill--private {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex-shrink: 0;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: rgba(113, 128, 150, 0.12);
+    border: 1px solid rgba(113, 128, 150, 0.35);
+}
+
+.cta-disabled {
+    display: inline-block;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* ---- Secondary projects browser (tier change) ---- */
+.projects--secondary {
+    border-top: 1px solid #e1e1e1;
+}
+
+.section-title--secondary {
+    font-size: 1.6rem;
+    color: var(--text-muted);
+}
+
+.section-intro--secondary {
+    margin-bottom: 2rem;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 980px) {
+    .flagship-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .cred-strip {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .flagship-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .building-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 520px) {
+    .cred-strip {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-text h1.hero-title {
+        font-size: 2.1rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .hero-lede {
+        font-size: 0.98rem;
+    }
+
+    .hero-cta {
+        justify-content: center;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
 }
 
