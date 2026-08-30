@@ -4,8 +4,14 @@
   "description": "Personal portfolio website (static HTML/CSS/JS) for Caio Di Felice Cunha.",
   "private": true,
   "scripts": {
-    "test": "node --test \"test/**/*.test.js\"",
-    "serve": "python -m http.server 8000"
+    "test": "node --test test/script.test.js",
+    "serve": "http-server . -p 4190 -c-1",
+    "test:e2e": "playwright test",
+    "test:all": "npm test && npm run test:e2e"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "http-server": "^14.1.1"
   },
   "license": "MIT",
   "homepage": "https://caio-felice-cunha.github.io/CaioFeliceCunha.github.io/"

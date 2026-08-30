@@ -1,67 +1,35 @@
-# Personal Portfolio Website
+# Caio Cunha — public portfolio
 
-A static portfolio site for Caio Di Felice Cunha (Data Analyst and Back-end Software Engineer). It presents work experience, education, and a projects section that is populated live from the GitHub REST API. Built with plain HTML, CSS, and vanilla JavaScript, no build step.
+A curated portfolio that puts nine selected products and engineering projects within two clicks of a safe demo, case study, or reproducible run.
 
-**Live demo:** https://caio-felice-cunha.github.io/CaioFeliceCunha.github.io/
+![Portfolio social preview](images/social-card.svg)
 
-## What it does
+[Try the portfolio](https://caio-felice-cunha.github.io/CaioFeliceCunha.github.io/) · [Read the showcase structure](#showcase-structure) · [Run locally](#run-locally)
 
-- Fetches the owner's public repositories from the GitHub API on page load and renders them as project cards.
-- Sorts projects into tabs (Data Analysis/Science, Back-end Software Engineering) and language subtabs (Python, R, SQL, Power BI, Go) based on each repository's GitHub topics.
-- Provides client-side search across project name, description, and topics, with match highlighting.
-- Shows a "Latest Projects" strip, an education section (degrees, courses, certifications), and a work-experience timeline.
+## Showcase structure
 
-## How project cards are driven
+- **AI Products:** Redax Juris, Voxpage, DrumAI
+- **Live Products:** MorarFora, Scoopy
+- **Browser Automation:** LinkedIn/X Scheduler, Instagram Reels Poster, YouTube Shorts Scheduler
+- **Data Engineering:** Supply Chain Intelligence Hub
 
-Cards are not hand-written. Each card comes from a public GitHub repository and is categorized by that repository's topics:
-
-- A main category requires the topic `data-analysis` (or `data`) or `backend`.
-- A language subtab requires a matching language topic: `python`, `r`, `sql`, `powerbi`, or `go`.
-- A repository tagged with a main category but no language topic still appears under All Projects (it is not hidden by the active subtab).
-
-To make a repository show up on the site, add the relevant topics to it on GitHub. No code change is needed.
+Each card uses one of four public states: `Live product`, `Interactive demo`, `Replay demo`, or `Local runnable`. Redax Juris and Voxpage remain visibly gated until historical credentials are rotated; their private repositories are not published.
 
 ## Run locally
 
-No build step. Serve the folder with any static server, for example:
-
-```bash
-# Python 3
-python -m http.server 8000
-# then open http://localhost:8000
-```
-
-The projects section calls the public GitHub API with no authentication. Unauthenticated requests are rate limited (currently 60 per hour per IP); if you hit the limit the section shows a retry message.
-
-## Tests
-
-A small Node test suite covers the project-categorization logic and the search-input handling (including the fix for searching terms with regex characters such as `c++`).
-
-```bash
+~~~bash
+npm install
 npm test
-```
+npm run serve
+~~~
 
-Requires Node 18+ (uses the built-in `node --test` runner; no dependencies to install).
+Open `http://localhost:8000`.
 
-## Project structure
+## Safety and truthfulness
 
-```
-index.html              Page markup and content (experience, education, contact)
-assets/css/styles.css   Styling
-assets/js/script.js     GitHub fetch, categorization, search, UI behavior
-images/minha-foto.jpg   Profile photo
-test/script.test.js     Node tests for the categorization and search logic
-```
-
-## Technologies Used
-
-- HTML5
-- CSS3 (custom properties, Flexbox, Grid, animations)
-- JavaScript (ES6+, vanilla)
-- GitHub REST API (client-side fetch)
-- Font Awesome 6 (cdnjs)
-- Google Fonts (Inter)
+The portfolio is curated in source instead of populated from GitHub's repository API. This prevents old training repositories from displacing selected work and keeps every description reviewable. It includes no customer artifacts, private source, credentials, or unverified performance metrics.
 
 ## License
 
-MIT.
+Site code is MIT licensed. Portrait, branding, screenshots, and authored copy remain © 2026 Caio Di Felice Cunha.
+
