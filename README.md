@@ -4,7 +4,7 @@ A curated portfolio that puts nine selected products and engineering projects wi
 
 ![Portfolio social preview](images/social-card.svg)
 
-[Try the portfolio](https://caio-felice-cunha.github.io/CaioFeliceCunha.github.io/) · [Read the showcase structure](#showcase-structure) · [Run locally](#run-locally)
+[Try the portfolio](https://caio-felice-cunha.github.io/CaioFeliceCunha.github.io/) · [Engineering structure](#showcase-structure) · [View source](https://github.com/Caio-Felice-Cunha/CaioFeliceCunha.github.io) · [Run locally](#run-locally)
 
 ## Showcase structure
 
@@ -15,6 +15,11 @@ A curated portfolio that puts nine selected products and engineering projects wi
 
 Each card uses one of four public states: `Live product`, `Interactive demo`, `Replay demo`, or `Local runnable`. Redax Juris and Voxpage remain visibly gated until historical credentials are rotated; their private repositories are not published.
 
+The seven released cards expose separate **Try the demo**, **Engineering case**,
+and **View source** paths. The technical pages cover problem framing,
+architecture, workflow, decisions, real public code or clearly labelled private
+pseudocode, tests, security boundaries, limitations, and local execution.
+
 ## Run locally
 
 ~~~bash
@@ -23,7 +28,7 @@ npm test
 npm run serve
 ~~~
 
-Open `http://localhost:8000`.
+Open `http://localhost:4190`.
 
 ## Safety and truthfulness
 

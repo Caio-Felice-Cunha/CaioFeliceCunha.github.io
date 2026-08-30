@@ -24,3 +24,14 @@ test('security-gated cases have no unpublished repository link', async ({ page }
     await expect(card.locator('a[href*="-case-study"]')).toHaveCount(0);
   }
 });
+
+test('every released project separates demo, engineering, and source paths', async ({ page }) => {
+  await page.goto('/');
+  const released = page.locator('[data-project]:not([data-project="redax-juris"]):not([data-project="voxpage"])');
+  await expect(released).toHaveCount(7);
+  for (const card of await released.all()) {
+    await expect(card.getByRole('link', { name: /Try (the demo|the dashboard)/i })).toHaveCount(1);
+    await expect(card.getByRole('link', { name: 'Engineering case' })).toHaveCount(1);
+    await expect(card.getByRole('link', { name: 'View source' })).toHaveCount(1);
+  }
+});
