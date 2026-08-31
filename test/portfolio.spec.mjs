@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
 
 test('curated work is visible and keyboard reachable', async ({ page }) => {
   await page.goto('/');
@@ -22,5 +23,29 @@ test('security-gated cases have no unpublished repository link', async ({ page }
     const card = page.locator('[data-project="' + id + '"]');
     await expect(card.getByText('Security gate pending')).toBeVisible();
     await expect(card.locator('a[href*="-case-study"]')).toHaveCount(0);
+  }
+});
+
+test('portfolio passes automated WCAG AA checks', async ({ page }) => {
+  await page.goto('/');
+  const { violations } = await new AxeBuilder({ page })
+    .withTags(['wcag2a', 'wcag2aa'])
+    .analyze();
+  const summary = violations.map(({ id, impact, nodes }) => ({
+    id,
+    impact,
+    targets: nodes.map((node) => node.target.join(' ')),
+  }));
+  expect(summary).toEqual([]);
+});
+
+test('every released project separates demo, engineering, and source paths', async ({ page }) => {
+  await page.goto('/');
+  const released = page.locator('[data-project]:not([data-project="redax-juris"]):not([data-project="voxpage"])');
+  await expect(released).toHaveCount(7);
+  for (const card of await released.all()) {
+    await expect(card.getByRole('link', { name: /Try (the demo|the dashboard)/i })).toHaveCount(1);
+    await expect(card.getByRole('link', { name: 'Engineering case' })).toHaveCount(1);
+    await expect(card.getByRole('link', { name: 'View source' })).toHaveCount(1);
   }
 });
