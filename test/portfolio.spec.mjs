@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
 
 test('curated work is visible and keyboard reachable', async ({ page }) => {
   await page.goto('/');
@@ -23,6 +24,19 @@ test('security-gated cases have no unpublished repository link', async ({ page }
     await expect(card.getByText('Security gate pending')).toBeVisible();
     await expect(card.locator('a[href*="-case-study"]')).toHaveCount(0);
   }
+});
+
+test('portfolio passes automated WCAG AA checks', async ({ page }) => {
+  await page.goto('/');
+  const { violations } = await new AxeBuilder({ page })
+    .withTags(['wcag2a', 'wcag2aa'])
+    .analyze();
+  const summary = violations.map(({ id, impact, nodes }) => ({
+    id,
+    impact,
+    targets: nodes.map((node) => node.target.join(' ')),
+  }));
+  expect(summary).toEqual([]);
 });
 
 test('every released project separates demo, engineering, and source paths', async ({ page }) => {
